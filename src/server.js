@@ -1,42 +1,75 @@
 const micro = require('micro');
 const querystring = require('querystring');
+const url = require('url');
 
 module.exports = {
   instance,
   start,
 };
 
-function instance(database) {
+function instance({
+  database,
+  verifyKey = () => true,
+  ratelimit = () => true,
+}) {
   return micro(async (request, response) => {
     if (request.method === 'POST') {
       const key = querystring.parse(await micro.text(request)).key;
 
+      await ratelimit(request, response);
+      await verifyKey(key);
+
       return database
         .get(key)
+        .catch(() => 0)
         .then(async count => {
           const newCount = Number(count) + 1;
 
           await database.put(key, newCount);
 
           response.setHeader('Content-Type', 'text/plain');
-          return newCount;
+          response.setHeader('Location', getRedirectUrl(request.headers));
+
+          micro.send(response, 303, newCount);
         })
         .catch(error => {
-          console.error(error);
           response.end();
         });
     }
+    if (request.method === 'GET') {
+      const key = querystring.parse(await micro.text(request)).key;
+
+      return database.get(key).catch(error => Promise.resolve('0'));
+    }
+
+    throw micro.createError(400);
   });
 }
 
-function start({ database, port }) {
-  const server = instance(database);
-
-  server.listen(port);
+function start({ instance, port }) {
+  instance.listen(port);
 
   process.on('SIGTERM', function() {
     server.close(function() {
       process.exit();
     });
+  });
+}
+
+function getRedirectUrl({ referer, host }) {
+  let urlObject;
+
+  if (referer) {
+    urlObject = url.parse(referer);
+  } else {
+    urlObject = {
+      protocol: 'http',
+      host,
+    };
+  }
+
+  return url.format({
+    ...urlObject,
+    search: '?countSend=1',
   });
 }

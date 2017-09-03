@@ -4,24 +4,26 @@
   "description": "Simple HTTP Node.js server that counts amount of cheers given.",
   "main": "src/server.js",
   "files": [
-    "src/main.js",
-    "src/server.js"
+    "src"
   ],
   "scripts": {
     "start": "node src/main.js",
-    "test": "ava src/test.js",
-    "lint": "prettier --write --single-quote --trailing-comma all src/*.js",
-    "watch": "nodemon --inspect src/main.js",
-    "watch:test": "npm test -- --watch"
+    "test": "ava test/*.js",
+    "test:watch": "npm run test -- --watch",
+    "test:ci": "npm run test -- --fail-fast",
+    "dev": "nodemon --inspect src/main.js",
+    "lint": "prettier --write --single-quote --trailing-comma all {src,test}/*.js"
   },
   "dependencies": {
     "level": "^1.7.0",
-    "memdown": "^1.2.4",
-    "micro": "^8.0.4"
+    "micro": "^8.0.4",
+    "micro-ratelimit": "^0.2.0"
   },
   "devDependencies": {
     "ava": "^0.22.0",
     "got": "^7.0.0",
+    "memdown": "^1.2.4",
+    "nock": "^9.0.14",
     "nodemon": "^1.11.0",
     "prettier": "^1.6.1"
   },
