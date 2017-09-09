@@ -13,9 +13,10 @@ function instance({
   ratelimit = () => true,
 }) {
   return micro(async (request, response) => {
-    if (request.method === 'POST') {
-      const key = querystring.parse(await micro.text(request)).key;
+    const key = querystring.parse(url.parse(request.url).query).key;
+    response.setHeader('Access-Control-Allow-Origin', '*');
 
+    if (request.method === 'POST') {
       await ratelimit(request, response);
       await verifyKey(key);
 
@@ -37,8 +38,6 @@ function instance({
         });
     }
     if (request.method === 'GET') {
-      const key = querystring.parse(await micro.text(request)).key;
-
       return database.get(key).catch(error => Promise.resolve('0'));
     }
 

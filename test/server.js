@@ -2,6 +2,7 @@ const got = require('got');
 const nock = require('nock');
 const test = require('ava');
 
+const request = require('./helpers/request.js');
 const database = require('./helpers/database.js');
 const server = require('../src/server.js');
 
@@ -30,13 +31,7 @@ test.afterEach.always('stop server', t => {
 
 test('POST should create initial count on new entry', t => {
   return got
-    .post(
-      { port: t.context.port, followRedirect: false },
-      {
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
+    .post(...request.create(t, { followRedirect: false }))
     .then(async response => {
       t.is(response.body, '1', 'Should return count incremented by one');
       t.is(response.statusCode, 303);
@@ -52,13 +47,7 @@ test('POST should increment count on existing entry', t => {
   t.context.testDb.put(t.context.testKey, 6);
 
   return got
-    .post(
-      { port: t.context.port, followRedirect: false },
-      {
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
+    .post(...request.create(t, { followRedirect: false }))
     .then(async response => {
       t.is(response.body, '7', 'Should return count incremented by one');
       t.is(response.statusCode, 303);
@@ -78,14 +67,7 @@ test('POST should redirect to referer if available', t => {
     .reply(200);
 
   return got
-    .post(
-      { port: t.context.port },
-      {
-        headers: { referer: originUrl },
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
+    .post(...request.create(t, { headers: { referer: originUrl } }))
     .then(response => {
       t.truthy(response.requestUrl, 'Is redirected');
       t.is(response.statusCode, 200);
@@ -99,60 +81,36 @@ test('POST should redirect to host', t => {
     .query({ countSend: 1 })
     .reply(200);
 
-  return got
-    .post(
-      { port: t.context.port, protocol: 'http:' },
-      {
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
-    .then(response => {
-      t.truthy(response.requestUrl, 'Is redirected');
-      t.is(response.statusCode, 200);
-      t.regex(response.url, /http.+localhost:\d+\/\?countSend=1/);
-    });
+  return got.post(...request.create(t)).then(response => {
+    t.truthy(response.requestUrl, 'Is redirected');
+    t.is(response.statusCode, 200);
+    t.regex(response.url, /http.+localhost:\d+\/\?countSend=1/);
+  });
 });
 
 test('GET should return initial count on non-existing entry', t => {
-  return got
-    .get(
-      { port: t.context.port },
-      {
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
-    .then(async response => {
-      t.is(response.body, '0', 'Should return count');
-      t.is(response.statusCode, 200);
+  return got.get(...request.create(t)).then(async response => {
+    t.is(response.body, '0', 'Should return count');
+    t.is(response.statusCode, 200);
 
-      t.context.testDb
-        .get(t.context.testKey)
-        .catch(() => t.pass('Should not create new key'));
-    });
+    t.context.testDb
+      .get(t.context.testKey)
+      .catch(() => t.pass('Should not create new key'));
+  });
 });
 
 test('GET should return count on existing entry', t => {
   t.context.testDb.put(t.context.testKey, 3);
 
-  return got
-    .get(
-      { port: t.context.port },
-      {
-        body: { key: t.context.testKey },
-        form: true,
-      },
-    )
-    .then(async response => {
-      t.is(response.body, '3', 'Should return count');
-      t.is(response.statusCode, 200);
-      t.is(
-        await t.context.testDb.get(t.context.testKey),
-        '3',
-        'Should not change count at database',
-      );
-    });
+  return got.get(...request.create(t)).then(async response => {
+    t.is(response.body, '3', 'Should return count');
+    t.is(response.statusCode, 200);
+    t.is(
+      await t.context.testDb.get(t.context.testKey),
+      '3',
+      'Should not change count at database',
+    );
+  });
 });
 
 test('Returns error on invalid request method', t => {

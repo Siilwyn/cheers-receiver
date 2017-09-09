@@ -1,6 +1,7 @@
 const got = require('got');
 const test = require('ava');
 
+const request = require('./helpers/request.js');
 const database = require('./helpers/database.js');
 const server = require('../src/server.js');
 
@@ -25,13 +26,7 @@ test('Should pass when rate limit resolves', t => {
   t.context.testServer = testServer;
 
   return got
-    .post(
-      { port: testServer.address().port, followRedirect: false },
-      {
-        body: { key: 'some-key' },
-        form: true,
-      },
-    )
+    .post(...request.create(t, { port: testServer.address().port }))
     .then(() => t.pass());
 });
 
@@ -50,13 +45,7 @@ test('Should return error when rate limit rejects', t => {
   t.context.testServer = testServer;
 
   return got
-    .post(
-      { port: testServer.address().port, followRedirect: false },
-      {
-        body: { key: '' },
-        form: true,
-      },
-    )
+    .post(...request.create(t, { port: testServer.address().port }))
     .then(t.fail)
     .catch(error => t.is(error.statusCode, 429));
 });
