@@ -1,8 +1,5 @@
 const leveldb = require('level');
-const microRatelimit = require('micro-ratelimit');
 const { promisify } = require('util');
-
-const ratelimit = microRatelimit({ window: 30000 }, () => Promise.resolve());
 
 const server = require('./server.js');
 
@@ -14,6 +11,5 @@ server.start({
   port: process.env.PORT || 3000,
   instance: server.instance({
     database: cheersDb,
-    ratelimit,
   }),
 });

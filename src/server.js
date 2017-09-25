@@ -10,14 +10,12 @@ module.exports = {
 function instance({
   database,
   verifyKey = () => true,
-  ratelimit = () => true,
 }) {
   return micro(async (request, response) => {
     const key = querystring.parse(url.parse(request.url).query).key;
     response.setHeader('Access-Control-Allow-Origin', '*');
 
     if (request.method === 'POST') {
-      await ratelimit(request, response);
       await verifyKey(key);
 
       return database

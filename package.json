@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "level": "^1.7.0",
-    "micro": "^8.0.4",
-    "micro-ratelimit": "^0.2.0"
+    "micro": "^8.0.4"
   },
   "devDependencies": {
     "ava": "^0.22.0",
