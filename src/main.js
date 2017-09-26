@@ -3,13 +3,13 @@ const { promisify } = require('util');
 
 const server = require('./server.js');
 
-const cheersDb = leveldb(process.env.CHEERS_RECEIVER_DB || require('memdown'));
-cheersDb.get = promisify(cheersDb.get);
-cheersDb.put = promisify(cheersDb.put);
+const database = leveldb(process.env.LEVELDOWN_DB || require('memdown'));
+database.get = promisify(database.get);
+database.put = promisify(database.put);
 
 server.start({
   port: process.env.PORT || 3000,
   instance: server.instance({
-    database: cheersDb,
+    database,
   }),
 });
