@@ -46,10 +46,8 @@ function instance({
 function start({ instance, port }) {
   instance.listen(port);
 
-  process.on('SIGTERM', function() {
-    server.close(function() {
-      process.exit();
-    });
+  process.on('SIGINT', () => {
+    instance.close(process.exit);
   });
 }
 
