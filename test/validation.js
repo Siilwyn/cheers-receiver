@@ -20,15 +20,15 @@ test.afterEach.always('stop server', t => {
 test('Should pass when key is resolved by validation', t => {
   const validKey = () => Promise.resolve();
 
-  const testServer = server.instance({
-    database: t.context.testDb,
-    verifyKey: validKey,
-  });
-  testServer.listen(0);
-  t.context.testServer = testServer;
+  t.context.testServer = server
+    .ignite({
+      database: t.context.testDb,
+      verifyKey: validKey,
+    })
+    .launch({ port: 0 });
 
   return got
-    .post(...request.create(t, { port: testServer.address().port }))
+    .post(...request.create(t, { port: t.context.testServer.address().port }))
     .then(() => t.pass());
 });
 
@@ -39,15 +39,15 @@ test('Should return error when key is rejected by validation', t => {
     return Promise.reject(error);
   };
 
-  const testServer = server.instance({
-    database: t.context.testDb,
-    verifyKey: invalidKey,
-  });
-  testServer.listen(0);
-  t.context.testServer = testServer;
+  t.context.testServer = server
+    .ignite({
+      database: t.context.testDb,
+      verifyKey: invalidKey,
+    })
+    .launch({ port: 0 });
 
   return got
-    .post(...request.create(t, { port: testServer.address().port }))
+    .post(...request.create(t, { port: t.context.testServer.address().port }))
     .then(t.fail)
     .catch(error => {
       t.truthy(error);

@@ -11,10 +11,11 @@ test.beforeEach('create database', t => {
 });
 
 test.beforeEach('start server', t => {
-  const testServer = server.instance({
-    database: t.context.testDb,
-  });
-  testServer.listen(0);
+  const testServer = server
+    .ignite({
+      database: t.context.testDb,
+    })
+    .launch({ port: 0 });
 
   t.context.testServer = testServer;
   t.context.port = testServer.address().port;

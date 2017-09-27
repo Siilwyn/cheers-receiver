@@ -3,15 +3,11 @@ const querystring = require('querystring');
 const url = require('url');
 
 module.exports = {
-  instance,
-  start,
+  ignite,
 };
 
-function instance({
-  database,
-  verifyKey = () => true,
-}) {
-  return micro(async (request, response) => {
+function ignite({ database, verifyKey = () => true }) {
+  const instance = micro(async (request, response) => {
     const key = querystring.parse(url.parse(request.url).query).key;
     response.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -41,14 +37,21 @@ function instance({
 
     throw micro.createError(400);
   });
+
+  return {
+    launch: launchFactory(instance),
+    instance: () => instance,
+  };
 }
 
-function start({ instance, port }) {
-  instance.listen(port);
+function launchFactory(instance) {
+  return ({ port }) => {
+    process.on('SIGINT', () => {
+      instance.close(process.exit);
+    });
 
-  process.on('SIGINT', () => {
-    instance.close(process.exit);
-  });
+    return instance.listen(port);
+  };
 }
 
 function getRedirectUrl({ referer, host }) {
