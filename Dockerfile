@@ -1,15 +1,14 @@
-FROM node:8
+FROM node:8-alpine
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Define app directory
+WORKDIR /app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install
+COPY package.json .
+RUN npm install --production
 
 # Bundle app source
-COPY . /usr/src/app
+COPY src ./src
 
-EXPOSE 3000
+EXPOSE ${PORT:-3000}
 CMD [ "npm", "start" ]
