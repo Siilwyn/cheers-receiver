@@ -1,11 +1,11 @@
 FROM node:8-alpine
 
-# Define app directory
+ENV NODE_ENV production
 WORKDIR /app
 
 # Install app dependencies
 COPY package.json .
-RUN npm install --production
+RUN npm install
 
 # Bundle app source
 COPY src ./src
