@@ -50,7 +50,11 @@ function launchFactory(instance) {
       instance.close(process.exit);
     });
 
-    return instance.listen(port);
+    return instance.listen(port, () => {
+      console.info(
+        `Server has launched from http://localhost:${instance.address().port}`,
+      );
+    });
   };
 }
 
