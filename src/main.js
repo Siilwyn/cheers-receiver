@@ -6,5 +6,6 @@ const server = require('./server.js');
 const database = leveldb(process.env.LEVELDOWN_DB || require('memdown'));
 database.get = promisify(database.get);
 database.put = promisify(database.put);
+database.close = database.close.bind(database);
 
 server.ignite({ database }).launch({ port: process.env.PORT || 3000 });

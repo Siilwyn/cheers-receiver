@@ -43,15 +43,20 @@ function ignite({ database, verifyKey = () => true }) {
   });
 
   return {
-    launch: launchFactory(instance),
+    launch: launchFactory({
+      instance,
+      closeHandler: database.close,
+    }),
     instance: () => instance,
   };
 }
 
-function launchFactory(instance) {
+function launchFactory({ instance, closeHandler }) {
   return ({ port }) => {
-    process.on('SIGINT', () => {
-      instance.close(process.exit);
+    ['SIGINT', 'SIGTERM'].forEach(function(signal) {
+      process.on(signal, function() {
+        instance.close(closeHandler(process.exit));
+      });
     });
 
     return instance.listen(port, () => {
