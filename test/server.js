@@ -113,10 +113,3 @@ test('GET should return count on existing entry', t => {
     );
   });
 });
-
-test('Returns error on invalid request method', t => {
-  return got
-    .patch({ port: t.context.port })
-    .then(() => t.fail())
-    .catch(error => t.is(error.statusCode, 400));
-});

@@ -12,7 +12,11 @@ function ignite({ database, verifyKey = () => true }) {
     response.setHeader('Access-Control-Allow-Origin', '*');
 
     if (request.method === 'POST') {
-      await verifyKey(key);
+      try {
+        await verifyKey(key);
+      } catch (error) {
+        micro.send(response, error.statusCode);
+      }
 
       return database
         .get(key)
