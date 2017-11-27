@@ -10,5 +10,5 @@ RUN npm install
 # Bundle app source
 COPY src ./src
 
-EXPOSE ${PORT:-3000}
-CMD [ "npm", "start" ]
+EXPOSE ${PORT:-3293}
+CMD [ "node", "src/main.js" ]
