@@ -15,7 +15,7 @@ function ignite({ database, verifyKey = () => true }) {
       try {
         await verifyKey(key);
       } catch (error) {
-        micro.send(response, error.statusCode);
+        return micro.send(response, error.statusCode);
       }
 
       return database
