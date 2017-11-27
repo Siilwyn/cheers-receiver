@@ -9,6 +9,7 @@ function create(t, options = {}) {
       {
         port: t.context.port,
         path: '/',
+        host: 'localhost',
       },
       options,
     ),
