@@ -64,7 +64,6 @@ test('POST should redirect to referer if available', t => {
   const originUrl = 'http://sii.com/apage';
   nock(originUrl)
     .get('')
-    .query({ countSend: 1 })
     .reply(200);
 
   return got
@@ -72,20 +71,19 @@ test('POST should redirect to referer if available', t => {
     .then(response => {
       t.truthy(response.requestUrl, 'Is redirected');
       t.is(response.statusCode, 200);
-      t.is(response.url, `${originUrl}?countSend=1`);
+      t.is(response.url, `${originUrl}#count-send`);
     });
 });
 
 test('POST should redirect to host', t => {
   nock('http://sii.com/apage')
     .get('')
-    .query({ countSend: 1 })
     .reply(200);
 
   return got.post(...request.create(t)).then(response => {
     t.truthy(response.requestUrl, 'Is redirected');
     t.is(response.statusCode, 200);
-    t.regex(response.url, /http.+localhost:\d+\/\?countSend=1/);
+    t.regex(response.url, /http.+localhost:\d+\/\#count-send/);
   });
 });
 

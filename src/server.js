@@ -81,6 +81,6 @@ function getRedirectUrl({ referer, host }) {
 
   return url.format({
     ...urlObject,
-    search: '?countSend=1',
+    hash: 'count-send',
   });
 }
