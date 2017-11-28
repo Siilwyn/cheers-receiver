@@ -10,9 +10,9 @@
     "start": "node src/main.js",
     "test": "ava test/*.js",
     "test:watch": "npm run test -- --watch",
-    "test:ci": "npm run test -- --fail-fast",
+    "test:ci": "npm run test -- --fail-fast && npm run lint -- --list-different",
     "dev": "nodemon --inspect src/main.js",
-    "lint": "prettier --write --single-quote --trailing-comma all {src,test}/*.js"
+    "lint": "prettier --write --single-quote --trailing-comma all {src,test}/*/*.js"
   },
   "dependencies": {
     "got": "^8.0.0",

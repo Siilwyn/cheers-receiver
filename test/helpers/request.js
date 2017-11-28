@@ -14,7 +14,7 @@ function create(t, options = {}) {
       options,
     ),
     {
-      query: {key: t.context.testKey},
+      query: { key: t.context.testKey },
     },
-  ]
+  ];
 }
