@@ -14,4 +14,6 @@ RUN npm install --build-from-source
 COPY src ./src
 
 EXPOSE ${PORT:-3293}
+
+USER node
 CMD [ "node", "src/main.js" ]
