@@ -6,8 +6,8 @@ module.exports = {
   ignite,
 };
 
-function ignite({ database, verifyKey = () => true }) {
-  const instance = micro(async (request, response) => {
+function createInstance({ database, verifyKey }) {
+  return micro(async (request, response) => {
     const key = querystring.parse(url.parse(request.url).query).key;
     response.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -41,6 +41,28 @@ function ignite({ database, verifyKey = () => true }) {
 
     throw micro.createError(400);
   });
+}
+
+function getRedirectUrl({ referer, host }) {
+  let urlObject;
+
+  if (referer) {
+    urlObject = url.parse(referer);
+  } else {
+    urlObject = {
+      protocol: 'http',
+      host,
+    };
+  }
+
+  return url.format({
+    ...urlObject,
+    hash: 'count-send',
+  });
+}
+
+function ignite({ database, verifyKey = () => true }) {
+  const instance = createInstance({ database, verifyKey });
 
   return {
     launch: launchFactory({
@@ -66,22 +88,4 @@ function launchFactory({ instance, closeHandler }) {
       );
     });
   };
-}
-
-function getRedirectUrl({ referer, host }) {
-  let urlObject;
-
-  if (referer) {
-    urlObject = url.parse(referer);
-  } else {
-    urlObject = {
-      protocol: 'http',
-      host,
-    };
-  }
-
-  return url.format({
-    ...urlObject,
-    hash: 'count-send',
-  });
 }
