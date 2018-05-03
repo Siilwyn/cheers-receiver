@@ -1,20 +1,6 @@
-const leveldb = require('level');
+const levelup = require('levelup');
 const memdown = require('memdown');
-const { promisify } = require('util');
 
 module.exports = {
-  create,
-  clear,
+  create: () => levelup(memdown()),
 };
-
-function create() {
-  const testDb = leveldb({ db: memdown });
-  testDb.get = promisify(testDb.get);
-  testDb.put = promisify(testDb.put);
-
-  return testDb;
-}
-
-function clear() {
-  memdown.clearGlobalStore();
-}
