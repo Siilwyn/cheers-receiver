@@ -45,17 +45,12 @@ test('Should return error when key is rejected by validation', t => {
   return Promise.all([
     got
       .post(...request.create(t, { port: t.context.testServer.address().port }))
-      .then(t.fail)
-      .catch(error => {
-        t.truthy(error);
-        t.is(error.message, 'Response code 403 (Forbidden)');
-      }),
+      .then(t.fail),
     got
       .get(...request.create(t, { port: t.context.testServer.address().port }))
-      .then(t.fail)
-      .catch(error => {
-        t.truthy(error);
-        t.is(error.message, 'Response code 403 (Forbidden)');
-      }),
-  ]);
+      .then(t.fail),
+  ]).catch(error => {
+    t.truthy(error);
+    t.is(error.message, 'Response code 403 (Forbidden)');
+  });
 });
