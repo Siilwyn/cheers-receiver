@@ -60,6 +60,7 @@ function launchFactory({ instance, closeHandler }) {
     });
 
     return instance.listen(port, () => {
+      if (process.env.NODE_ENV === 'test') return;
       console.info(
         `Server has launched from http://localhost:${instance.address().port}`,
       );

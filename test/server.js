@@ -61,7 +61,12 @@ test('POST should redirect to referer if available', t => {
   const originUrl = 'http://sii.com/apage';
 
   return got
-    .post(...request.create(t, { headers: { referer: originUrl }, followRedirect: false }))
+    .post(
+      ...request.create(t, {
+        headers: { referer: originUrl },
+        followRedirect: false,
+      }),
+    )
     .then(response => {
       t.is(response.headers.location, `${originUrl}#count-send`);
       t.is(response.statusCode, 303, 'Is redirected');
