@@ -9,10 +9,6 @@ test.beforeEach('create database', t => {
   t.context.testDb = database.create();
 });
 
-test.afterEach.always('clear database', t => {
-  database.clear();
-});
-
 test.afterEach.always('stop server', t => {
   t.context.testServer.close();
 });

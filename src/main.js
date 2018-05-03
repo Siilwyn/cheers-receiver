@@ -1,12 +1,10 @@
 const got = require('got');
-const leveldb = require('level');
-const { promisify } = require('util');
+const leveldown = require('leveldown');
+const levelup = require('levelup');
 
 const server = require('./server.js');
 
-const database = leveldb(process.env.LEVELDOWN_DB || require('memdown'));
-database.get = promisify(database.get);
-database.put = promisify(database.put);
+const database = levelup(leveldown(process.env.LEVELDOWN_DB));
 database.close = database.close.bind(database);
 
 server
