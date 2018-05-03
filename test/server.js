@@ -1,6 +1,5 @@
 const test = require('ava');
 const got = require('got');
-const nock = require('nock');
 
 const request = require('./helpers/request.js');
 const database = require('./helpers/database.js');
@@ -60,16 +59,12 @@ test('POST should increment count on existing entry', t => {
 
 test('POST should redirect to referer if available', t => {
   const originUrl = 'http://sii.com/apage';
-  nock(originUrl)
-    .get('')
-    .reply(200);
 
   return got
-    .post(...request.create(t, { headers: { referer: originUrl } }))
+    .post(...request.create(t, { headers: { referer: originUrl }, followRedirect: false }))
     .then(response => {
-      t.truthy(response.requestUrl, 'Is redirected');
-      t.is(response.statusCode, 200);
-      t.is(response.url, `${originUrl}#count-send`);
+      t.is(response.headers.location, `${originUrl}#count-send`);
+      t.is(response.statusCode, 303, 'Is redirected');
     });
 });
 
