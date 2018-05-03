@@ -23,7 +23,6 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "memdown": "^2.0.0",
-    "nock": "^9.0.14",
     "nodemon": "^1.11.0",
     "prettier": "^1.6.1"
   },
