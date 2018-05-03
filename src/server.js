@@ -11,13 +11,13 @@ function createInstance({ database, verifyKey }) {
     const key = querystring.parse(url.parse(request.url).query).key;
     response.setHeader('Access-Control-Allow-Origin', '*');
 
-    if (request.method === 'POST') {
-      try {
-        await verifyKey(key);
-      } catch (error) {
-        return micro.send(response, error.statusCode, error.message);
-      }
+    try {
+      await verifyKey(key);
+    } catch (error) {
+      return micro.send(response, error.statusCode, error.message);
+    }
 
+    if (request.method === 'POST') {
       return database
         .get(key)
         .catch(() => 0)
