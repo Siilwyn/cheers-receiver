@@ -4,17 +4,14 @@ module.exports = {
 
 function create(t, options = {}) {
   return [
-    Object.assign(
-      {},
-      {
-        port: t.context.port,
-        path: '/',
-        host: 'localhost',
-      },
-      options,
-    ),
+    {
+      port: t.context.port,
+      path: '/',
+      host: 'localhost',
+    },
     {
       query: { key: t.context.testKey },
+      ...options,
     },
   ];
 }
