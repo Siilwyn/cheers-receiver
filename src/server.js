@@ -36,7 +36,7 @@ function createInstance({ database, verifyKey }) {
         });
     }
     if (request.method === 'GET') {
-      return database.get(key).catch(error => Promise.resolve('0'));
+      return database.get(key || '').catch(error => Promise.resolve('0'));
     }
 
     throw micro.createError(400);

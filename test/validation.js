@@ -16,6 +16,7 @@ test.afterEach.always('stop server', t => {
 test('Should pass when key is resolved by validation', t => {
   const validKey = () => Promise.resolve();
 
+  t.context.testKey = 'some-key';
   t.context.testServer = server
     .ignite({
       database: t.context.testDb,
