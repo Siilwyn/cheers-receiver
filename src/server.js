@@ -1,3 +1,5 @@
+'use strict';
+
 const micro = require('micro');
 const querystring = require('querystring');
 const url = require('url');
