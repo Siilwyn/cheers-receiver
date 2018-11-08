@@ -4,14 +4,14 @@ ENV NODE_ENV production
 WORKDIR /app
 
 # Install database dependencies
-RUN apk add --update python make g++
+RUN ["apk", "add", "--update", "python", "make", "g++"]
 
 # Install app dependencies
-COPY package.json .
-RUN npm install --build-from-source
+COPY ["package.json", "package-lock.json", "./"]
+RUN ["npm", "install", "--build-from-source"]
 
 # Bundle app source
-COPY src ./src
+COPY ["./src/", "./src/"]
 
 EXPOSE ${PORT:-3293}
-CMD [ "node", "src/main.js" ]
+CMD ["node", "src/main.js"]
