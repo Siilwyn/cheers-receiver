@@ -27,7 +27,7 @@
     "prettier": "^1.6.1"
   },
   "engines": {
-    "node": ">7"
+    "node": ">= 8"
   },
   "repository": {
     "url": "https://github.com/Siilwyn/cheers-receiver.git",
