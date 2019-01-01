@@ -17,11 +17,11 @@
   "dependencies": {
     "got": "^9.2.0",
     "leveldown": "^4.0.1",
-    "levelup": "^3.1.0",
+    "levelup": "^4.0.0",
     "micro": "^9.3.0"
   },
   "devDependencies": {
-    "ava": "1.0.0-rc.2",
+    "ava": "1.0.1",
     "memdown": "^3.0.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.6.1"
