@@ -21,13 +21,13 @@
     "micro": "^9.3.0"
   },
   "devDependencies": {
-    "ava": "1.4.1",
+    "ava": "^1.4.1",
     "memdown": "^4.0.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.6.1"
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">= 10"
   },
   "repository": {
     "url": "https://github.com/Siilwyn/cheers-receiver.git",
