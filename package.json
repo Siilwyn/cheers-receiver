@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "start": "node src/main.js",
+    "dev": "nodemon --inspect src/main.js",
     "test": "NODE_ENV=test ava test/*.js",
     "test:watch": "npm run test -- --watch",
     "test:ci": "npm run test -- --fail-fast && npm run lint -- --list-different",
-    "dev": "nodemon --inspect src/main.js",
     "lint": "prettier --write --single-quote --trailing-comma all '{src,test}/**/*.js'"
   },
   "dependencies": {
