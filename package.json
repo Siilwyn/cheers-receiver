@@ -15,14 +15,14 @@
     "lint": "prettier --write --single-quote --trailing-comma all '{src,test}/**/*.js'"
   },
   "dependencies": {
-    "got": "^9.2.0",
-    "leveldown": "^5.0.0",
-    "levelup": "^4.0.0",
+    "got": "^9.2.2",
+    "leveldown": "^5.1.1",
+    "levelup": "^4.1.0",
     "micro": "^9.3.0"
   },
   "devDependencies": {
-    "ava": "^2.0.0",
-    "memdown": "^4.0.0",
+    "ava": "^2.2.0",
+    "memdown": "^4.1.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.6.1"
   },
