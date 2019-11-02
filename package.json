@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "ava": "^2.4.0",
-    "memdown": "^5.0.0",
+    "memdown": "^5.1.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.6.1"
   },
