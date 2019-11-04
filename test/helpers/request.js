@@ -10,6 +10,7 @@ function create(t, options = {}) {
       port: t.context.port,
       path: '/',
       host: 'localhost',
+      protocol: 'http:',
     },
     {
       query: { key: t.context.testKey },
