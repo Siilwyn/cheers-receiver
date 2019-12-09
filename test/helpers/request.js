@@ -8,12 +8,12 @@ function create(t, options = {}) {
   return [
     {
       port: t.context.port,
-      path: '/',
+      pathname: '/',
       host: 'localhost',
       protocol: 'http:',
     },
     {
-      query: { key: t.context.testKey },
+      searchParams: { key: t.context.testKey },
       ...options,
     },
   ];

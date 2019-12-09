@@ -11,6 +11,10 @@ test.beforeEach('create database', t => {
   t.context.testDb = database.create();
 });
 
+test.beforeEach('set required context', t => {
+  t.context.testKey = 'some-key';
+});
+
 test.afterEach.always('stop server', t => {
   t.context.testServer.close();
 });
@@ -18,7 +22,6 @@ test.afterEach.always('stop server', t => {
 test('Should pass when key is resolved by validation', t => {
   const validKey = () => Promise.resolve();
 
-  t.context.testKey = 'some-key';
   t.context.testServer = server
     .ignite({
       database: t.context.testDb,
