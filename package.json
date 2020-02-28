@@ -15,7 +15,7 @@
     "lint": "prettier --write --single-quote --trailing-comma all '{src,test}/**/*.js'"
   },
   "dependencies": {
-    "got": "^10.4.0",
+    "got": "^10.6.0",
     "leveldown": "^5.4.1",
     "levelup": "^4.3.2",
     "micro": "^9.3.0"
