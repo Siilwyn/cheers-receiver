@@ -10,9 +10,11 @@
     "start": "node src/main.js",
     "dev": "nodemon --inspect src/main.js",
     "test": "NODE_ENV=test ava test/*.js",
+    "test:ci": "npm run test && npm run lint",
     "test:watch": "npm run test -- --watch",
-    "test:ci": "npm run test -- --fail-fast && npm run lint -- --list-different",
-    "lint": "prettier --write --single-quote --trailing-comma all '{src,test}/**/*.js'"
+    "lint": "npm run prettier -- --check",
+    "format": "npm run prettier -- --write",
+    "prettier": "prettier '{src,test}/**/*.js'"
   },
   "dependencies": {
     "got": "^10.7.0",
@@ -28,6 +30,10 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
   },
   "repository": {
     "url": "https://github.com/Siilwyn/cheers-receiver.git",

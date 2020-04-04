@@ -21,7 +21,7 @@ function verifyKey(key) {
     };
   }
 
-  return database.get(key).catch(error => {
+  return database.get(key).catch((error) => {
     if (error.type == 'NotFoundError') {
       return got.head(`https://selwyn.cc/writings/${key}`);
     } else {

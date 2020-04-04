@@ -7,19 +7,19 @@ const request = require('./helpers/request.js');
 const database = require('./helpers/database.js');
 const server = require('../src/server.js');
 
-test.beforeEach('create database', t => {
+test.beforeEach('create database', (t) => {
   t.context.testDb = database.create();
 });
 
-test.beforeEach('set required context', t => {
+test.beforeEach('set required context', (t) => {
   t.context.testKey = 'some-key';
 });
 
-test.afterEach.always('stop server', t => {
+test.afterEach.always('stop server', (t) => {
   t.context.testServer.close();
 });
 
-test('Should pass when key is resolved by validation', t => {
+test('Should pass when key is resolved by validation', (t) => {
   const validKey = () => Promise.resolve();
 
   t.context.testServer = server
@@ -34,7 +34,7 @@ test('Should pass when key is resolved by validation', t => {
     .then(() => t.pass());
 });
 
-test('Should return error when key is rejected by validation', t => {
+test('Should return error when key is rejected by validation', (t) => {
   const invalidKey = () => {
     const error = new Error('Invalid key');
     error.statusCode = 403;
@@ -55,7 +55,7 @@ test('Should return error when key is rejected by validation', t => {
     got
       .get(...request.create(t, { port: t.context.testServer.address().port }))
       .then(t.fail),
-  ]).catch(error => {
+  ]).catch((error) => {
     t.truthy(error);
     t.is(error.message, 'Response code 403 (Forbidden)');
   });
