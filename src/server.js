@@ -23,7 +23,7 @@ function createInstance({ database, verifyKey }) {
       return database
         .get(key)
         .catch(() => 0)
-        .then(async count => {
+        .then(async (count) => {
           const newCount = Number(count) + 1;
 
           await database.put(key, newCount);
@@ -33,12 +33,12 @@ function createInstance({ database, verifyKey }) {
 
           micro.send(response, 303, newCount);
         })
-        .catch(error => {
+        .catch((error) => {
           response.end();
         });
     }
     if (request.method === 'GET') {
-      return database.get(key || '').catch(error => Promise.resolve('0'));
+      return database.get(key || '').catch((error) => Promise.resolve('0'));
     }
 
     throw micro.createError(400);
@@ -77,8 +77,8 @@ function ignite({ database, verifyKey = () => true }) {
 
 function launchFactory({ instance, closeHandler }) {
   return ({ port }) => {
-    ['SIGINT', 'SIGTERM'].forEach(function(signal) {
-      process.on(signal, function() {
+    ['SIGINT', 'SIGTERM'].forEach(function (signal) {
+      process.on(signal, function () {
         instance.close(closeHandler(process.exit));
       });
     });
