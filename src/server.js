@@ -1,7 +1,7 @@
 'use strict';
 
 const micro = require('micro');
-const querystring = require('querystring');
+const querystringify = require('querystringify');
 const url = require('url');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
 
 function createInstance({ database, verifyKey }) {
   return micro(async (request, response) => {
-    const key = querystring.parse(url.parse(request.url).query).key;
+    const key = querystringify.parse(url.parse(request.url).query).key;
     response.setHeader('Access-Control-Allow-Origin', '*');
 
     try {
