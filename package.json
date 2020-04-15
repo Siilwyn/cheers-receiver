@@ -25,7 +25,7 @@
   "devDependencies": {
     "ava": "^3.5.1",
     "memdown": "^5.1.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.2"
   },
   "engines": {
