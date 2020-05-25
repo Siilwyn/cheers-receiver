@@ -23,7 +23,7 @@
     "micro": "^9.3.0"
   },
   "devDependencies": {
-    "ava": "^3.8.1",
+    "ava": "^3.8.2",
     "memdown": "^5.1.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
