@@ -3,6 +3,7 @@
 const micro = require('micro');
 const querystring = require('querystring');
 const url = require('url');
+const { htmlEscape } = require('escape-goat');
 
 module.exports = {
   ignite,
@@ -16,7 +17,7 @@ function createInstance({ database, verifyKey }) {
     try {
       await verifyKey(key);
     } catch (error) {
-      return micro.send(response, error.statusCode, error.message);
+      return micro.send(response, error.statusCode, htmlEscape(error.message));
     }
 
     if (request.method === 'POST') {
