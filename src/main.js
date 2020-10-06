@@ -25,7 +25,6 @@ function verifyKey(key) {
     if (error.type == 'NotFoundError') {
       return got.head(`https://selwyn.cc/writings/${key}`);
     } else {
-      error.message = `Could not reach the database.`;
       throw error;
     }
   });
