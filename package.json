@@ -27,7 +27,7 @@
     "ava": "^3.13.0",
     "memdown": "^5.1.0",
     "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
+    "prettier": "^2.2.0"
   },
   "engines": {
     "node": ">= 10"
