@@ -17,7 +17,7 @@
     "prettier": "prettier '{src,test}/**/*.js'"
   },
   "dependencies": {
-    "escape-goat": "^3.0.0",
+    "escape-goat": "^4.0.0",
     "got": "^11.8.2",
     "leveldown": "^6.0.0",
     "levelup": "^4.4.0",
