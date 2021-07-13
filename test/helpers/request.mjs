@@ -1,10 +1,6 @@
-'use strict';
+export { createRequest };
 
-module.exports = {
-  create,
-};
-
-function create(t, options = {}) {
+function createRequest(t, options = {}) {
   return [
     {
       port: t.context.port,

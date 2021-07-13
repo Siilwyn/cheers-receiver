@@ -1,10 +1,8 @@
-'use strict';
+import got from 'got';
+import leveldown from 'leveldown';
+import levelup from 'levelup';
 
-const got = require('got');
-const leveldown = require('leveldown');
-const levelup = require('levelup');
-
-const server = require('./server.js');
+import { server } from './server.mjs';
 
 const database = levelup(leveldown(process.env.LEVELDOWN_DB));
 database.close = database.close.bind(database);

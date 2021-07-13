@@ -1,14 +1,12 @@
-'use strict';
+import got from 'got';
+import test from 'ava';
 
-const got = require('got');
-const test = require('ava');
-
-const request = require('./helpers/request.js');
-const database = require('./helpers/database.js');
-const server = require('../src/server.js');
+import { createRequest } from './helpers/request.mjs';
+import { createDatabase } from './helpers/database.mjs';
+import { server } from '../src/server.mjs';
 
 test.beforeEach('create database', (t) => {
-  t.context.testDb = database.create();
+  t.context.testDb = createDatabase();
 });
 
 test.beforeEach('set required context', (t) => {
@@ -30,7 +28,7 @@ test('Should pass when key is resolved by validation', (t) => {
     .launch({ port: 0 });
 
   return got
-    .post(...request.create(t, { port: t.context.testServer.address().port }))
+    .post(...createRequest(t, { port: t.context.testServer.address().port }))
     .then(() => t.pass());
 });
 
@@ -50,10 +48,10 @@ test('Should return error when key is rejected by validation', (t) => {
 
   return Promise.all([
     got
-      .post(...request.create(t, { port: t.context.testServer.address().port }))
+      .post(...createRequest(t, { port: t.context.testServer.address().port }))
       .then(t.fail),
     got
-      .get(...request.create(t, { port: t.context.testServer.address().port }))
+      .get(...createRequest(t, { port: t.context.testServer.address().port }))
       .then(t.fail),
   ]).catch((error) => {
     t.truthy(error);

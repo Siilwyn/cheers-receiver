@@ -1,13 +1,11 @@
-'use strict';
+import micro from 'micro';
+import querystring from 'querystring';
+import url from 'url';
+import { htmlEscape } from 'escape-goat';
 
-const micro = require('micro');
-const querystring = require('querystring');
-const url = require('url');
-const { htmlEscape } = require('escape-goat');
+const server = { ignite };
 
-module.exports = {
-  ignite,
-};
+export { server };
 
 function createInstance({ database, verifyKey }) {
   return micro(async (request, response) => {
@@ -86,6 +84,7 @@ function launchFactory({ instance, closeHandler }) {
 
     return instance.listen(port, () => {
       if (process.env.NODE_ENV === 'test') return;
+
       console.info(
         `Server has launched from http://localhost:${instance.address().port}`,
       );

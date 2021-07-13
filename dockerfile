@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:14-alpine
 
 ENV NODE_ENV production
 WORKDIR /app
@@ -14,4 +14,4 @@ RUN ["npm", "install", "--build-from-source"]
 COPY ["./src/", "./src/"]
 
 EXPOSE ${PORT:-3293}
-CMD ["node", "src/main.js"]
+CMD ["node", "src/main.mjs"]
