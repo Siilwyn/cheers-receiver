@@ -19,7 +19,7 @@
   "dependencies": {
     "escape-goat": "^4.0.0",
     "got": "^11.8.2",
-    "leveldown": "^6.0.0",
+    "leveldown": "^6.0.2",
     "levelup": "^5.0.1",
     "micro": "^9.3.0"
   },
