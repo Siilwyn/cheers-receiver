@@ -19,18 +19,18 @@
   "dependencies": {
     "escape-goat": "^4.0.0",
     "got": "^11.8.2",
-    "leveldown": "^6.0.2",
-    "levelup": "^5.0.1",
+    "leveldown": "^6.1.0",
+    "levelup": "^5.1.1",
     "micro": "^9.3.0"
   },
   "devDependencies": {
     "ava": "^3.15.0",
-    "memdown": "^6.0.0",
-    "nodemon": "^2.0.12",
+    "memdown": "^6.1.1",
+    "nodemon": "^2.0.14",
     "prettier": "^2.4.1"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "prettier": {
     "trailingComma": "all",
