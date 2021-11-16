@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 ENV NODE_ENV production
 WORKDIR /app
@@ -8,7 +8,7 @@ RUN ["apk", "add", "--update", "python", "make", "g++"]
 
 # Install app dependencies
 COPY ["package.json", "package-lock.json", "./"]
-RUN ["npm", "install", "--build-from-source"]
+RUN ["npm", "install", "--build-from-source", "--no-audit"]
 
 # Bundle app source
 COPY ["./src/", "./src/"]
